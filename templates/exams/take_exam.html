@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Take Exam</title>
+        <link rel="stylesheet" href="{% static 'exams/style.css'}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Exam</h2>
+            <form method="post">
+                {% csrf_token %}
+
+                {% for q in questions %}
+                    <div class="question-box">
+                        <p><strong>{{ forloop.counter }}.{{ q.question_text }}</strong></p>
+
+                        <label>
+                            <input type="radio" name="q{{ q.id }}" value="A" required>
+                            {{ q.option_a }}
+                        </label><br>
+
+                        <label>
+                            <input type="radio" name="q{{ q.id }}" value="B" required>
+                            {{ q.option_b }}
+                        </label><br>
+
+                        <label>
+                            <input type="radio" name="q{{ q.id }}" value="C" required>
+                            {{ q.option_c }}
+                        </label><br>
+
+                        <label>
+                            <input type="radio" name="q{{ q.id }}" value="D" required>
+                            {{ q.option_d }}
+                        </label>
+                    </div>
+                {% endfor %}
+
+                <button type="submit">Submit Exam</button>
+            </form>
+        </div>
+    </body>
+</html>

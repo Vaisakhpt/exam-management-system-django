@@ -2,11 +2,12 @@ from django.http import JsonResponse
 from .models import Result
 
 def student_result(request,student_id):
-    results=Result.objects.filter(student=student_id)
+    results=Result.objects.filter(student_id=student_id)
 
     if not results.exists():
         return JsonResponse(
-            {"message":"No results found for this students"},status=404)
+            {"status":"error","message":"No results found for this students"},status=404
+        )
 
     data=[]
     for result in results:
@@ -16,4 +17,6 @@ def student_result(request,student_id):
             "score":result.score,
             "total_marks":result.exam.total_marks
         })
-    return JsonResponse({"results":data})
+    return JsonResponse(
+        {"status":"success","results":data},status=200
+    )
